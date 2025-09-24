@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Pet Monitoring System</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="hamburger-menu">
+      <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
+    </div>
+    <h1 class="navbar-title">Pet Monitoring System</h1>
+  </nav>
+
+  <!-- Slide Menu -->
+  <div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"></div>
+  <div id="navMenu" class="nav-dropdown hidden">
+    
+    <button class="nav-item" onclick="showHomePage(); closeMenu()">🏠 Home</button>
+    <button class="nav-item" onclick="showCatPage(); closeMenu()">🐱 Cat</button>
+    <button class="nav-item" onclick="showNotificationsPage(); closeMenu()">🔔 Notifications</button>
+    <button class="nav-item" onclick="showProfilePage(); closeMenu()">👤 Profile</button>
+    <!-- <button class="nav-item" onclick="showAboutPage(); closeMenu()">ℹ️ About</button> -->
+  </div>
+
+  <!-- หน้า Home -->
+  <div id="homePage" class="page">
+    <div class="room-grid">
+      <div class="room-card" onclick="selectRoom(0)">
+        <div class="room-preview">
+          <div class="live-preview">
+
+            <div class="camera-placeholder">📹</div>
+          </div>
+        </div>
+        <h3>Hall</h3>
+        <button class="select-btn">เลือกห้อง</button>
+      </div>
+
+      <div class="room-card" onclick="selectRoom(1)">
+        <div class="room-preview">
+          <div class="live-preview">
+            <div class="camera-placeholder">📹</div>
+          </div>
+        </div>
+        <h3>Kitchen</h3>
+        <button class="select-btn">เลือกห้อง</button>
+      </div>
+
+      <div class="room-card" onclick="selectRoom(2)">
+        <div class="room-preview">
+          <div class="live-preview">
+            <div class="camera-placeholder">📹</div>
+          </div>
+        </div>
+        <h3>Garage</h3>
+        <button class="select-btn">เลือกห้อง</button>
+      </div>
+
+      <div class="room-card" onclick="selectRoom(3)">
+        <div class="room-preview">
+          <div class="live-preview">
+            <div class="camera-placeholder">📹</div>
+          </div>
+        </div>
+        <h3>Garden</h3>
+        <button class="select-btn">เลือกห้อง</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- หน้าแสดงกล้องเดี่ยว -->
+<div id="cameraPage" class="page hidden">
+  <div class="camera-header">
+    <button class="back-btn" onclick="goBack()">← ย้อนกลับ</button>
+    <h2 id="currentRoomName">Hall</h2> <!-- ชื่อห้อง -->
+  </div>
+  <div class="camera-container">
+    <div class="video-wrapper">
+      <div id="cameraFeed" class="camera-feed">
+        <!-- จะแสดง URL ของกล้อง -->
+        <div class="simulated-video">
+          <div class="camera-placeholder large">📹</div>
+          <p>สถานะ: กำลังบันทึก</p>
+          <p id="timestamp"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="camera-controls">
+      <button class="nav-btn" onclick="previousCamera()">← ก่อนหน้า</button>
+      <span id="cameraInfo">กล้อง 1 จาก 4</span> <!-- ข้อมูลกล้อง 1 จาก 4 -->
+      <button class="nav-btn" onclick="nextCamera()">ถัดไป →</button>
+    </div>
+  </div>
+</div>
+
+
+  <!-- หน้า Cat Gallery -->
+  <div id="catPage" class="page hidden">
+    <div class="camera-header">
+      <button class="back-btn" onclick="showHomePage()">← ย้อนกลับ</button>
+      <h2>Cat</h2>
+    </div>
+    <div class="cat-gallery">
+      <div class="cat-grid">
+        <div class="cat-card" onclick="selectCat(0)">
+          <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=300&h=300&fit=crop" alt="Orange Cat" class="cat-image">
+          <h3>Orange</h3>
+        </div>
+        <div class="cat-card" onclick="selectCat(1)">
+          <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=300&h=300&fit=crop" alt="Gray Cat" class="cat-image">
+          <h3>Gray</h3>
+        </div>
+        <div class="cat-card" onclick="selectCat(2)">
+          <img src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=300&h=300&fit=crop" alt="White Cat" class="cat-image">
+          <h3>White</h3>
+        </div>
+        <div class="cat-card" onclick="selectCat(3)">
+          <img src="https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?w=300&h=300&fit=crop" alt="Black Cat" class="cat-image">
+          <h3>Black</h3>
+        </div>
+        <div class="cat-card" onclick="selectCat(4)">
+          <img src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=300&h=300&fit=crop" alt="Striped Cat" class="cat-image">
+          <h3>Striped</h3>
+        </div>
+        <div class="cat-card" onclick="selectCat(5)">
+          <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=300&h=300&fit=crop" alt="Calico Cat" class="cat-image">
+          <h3>Calico</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- หน้า Statistics -->
+  <div id="statisticsPage" class="page hidden">
+    <div class="camera-header">
+      <button class="back-btn" onclick="goBackFromStatistics()">← ย้อนกลับ</button>
+      <h2 id="statisticsTitle">Red's Statistics</h2>
+    </div>
+    <div class="statistics-container">
+      <div class="stats-header">
+        <div class="cat-selector">
+          <select id="catSelect" class="cat-dropdown" onchange="updateStatistics()">
+            <option value="0">Orange</option>
+            <option value="1">Gray</option>
+            <option value="2">White</option>
+            <option value="3">Black</option>
+            <option value="4">Striped</option>
+            <option value="5">Calico</option>
+          </select>
+        </div>
+        
+        <div class="date-filters">
+          <select id="periodSelect" class="period-dropdown" onchange="updateDateFilter()">
+            <option value="daily">รายวัน</option>
+            <option value="monthly">รายเดือน</option>
+            <option value="yearly">รายปี</option>
+          </select>
+          
+          <select id="yearSelect" class="year-dropdown">
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+          </select>
+          
+          <select id="monthSelect" class="month-dropdown">
+            <option value="01">มกราคม</option>
+            <option value="02">กุมภาพันธ์</option>
+            <option value="03">มีนาคม</option>
+            <option value="04">เมษายน</option>
+            <option value="05">พฤษภาคม</option>
+            <option value="06">มิถุนายน</option>
+            <option value="07">กรกฎาคม</option>
+            <option value="08">สิงหาคม</option>
+            <option value="09">กันยายน</option>
+            <option value="10">ตุลาคม</option>
+            <option value="11">พฤศจิกายน</option>
+            <option value="12">ธันวาคม</option>
+          </select>
+          
+          <button class="search-btn" onclick="searchStatistics()">ค้นหา</button>
+        </div>
+      </div>
+      
+      <div class="stats-content"></div>
+
+        <div class="stats-chart-container">
+          <canvas id="statsChart" class="stats-chart"></canvas>
+        </div>
+
+        <div class="stats-summary">
+          <div class="summary-cards">
+            <div class="summary-card">
+              <div class="card-icon">🏃</div>
+              <div class="card-content">
+                <h3>ความเคลื่อนไหวรวม</h3>
+                <p id="totalMovement">245 นาที</p>
+              </div>
+            </div>
+            <div class="summary-card">
+              <div class="card-icon">😴</div>
+              <div class="card-content">
+                <h3>เวลานอนหลับ</h3>
+                <p id="sleepTime">8.5 ชั่วโมง</p>
+              </div>
+            </div>
+            <div class="summary-card">
+              <div class="card-icon">🍽️</div>
+              <div class="card-content">
+                <h3>เวลากิน</h3>
+                <p id="eatTime">45 นาที</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- หน้า Alerts -->
+  <div id="alertsPage" class="page hidden">
+    <div class="camera-header">
+      <button class="back-btn" onclick="goBackFromAlerts()">← ย้อนกลับ</button>
+      <h2>Alerts Page</h2>
+      <div class="filter-btn-container">
+        <button class="filter-btn" onclick="toggleFilter()">🔽</button>
+      </div>
+    </div>
+    
+    <!-- Filter Section -->
+    <div id="filterSection" class="filter-section hidden">
+      <div class="filter-controls">
+        <div class="filter-row">
+          <label for="alertTypeFilter">ประเภทการแจ้งเตือน:</label>
+          <select id="alertTypeFilter" class="filter-select">
+            <option value="all">ทั้งหมด</option>
+            <option value="movement">การเคลื่อนไหว</option>
+            <option value="feeding">การกิน</option>
+            <option value="sleeping">การนอน</option>
+            <option value="unusual">พฤติกรรมผิดปกติ</option>
+          </select>
+        </div>
+        
+        <div class="filter-row">
+          <label for="catFilter">เลือกแมว:</label>
+          <select id="catFilter" class="filter-select">
+            <option value="all">ทั้งหมด</option>
+            <option value="Orange">Orange</option>
+            <option value="Gray">Gray</option>
+            <option value="White">White</option>
+            <option value="Black">Black</option>
+            <option value="Striped">Striped</option>
+            <option value="Calico">Calico</option>
+          </select>
+        </div>
+        
+        <div class="filter-row">
+          <label for="dateFilter">วันที่:</label>
+          <input type="date" id="dateFilter" class="filter-input">
+        </div>
+        
+        <div class="filter-actions">
+          <button class="apply-filter-btn" onclick="applyFilters()">ใช้ตัวกรอง</button>
+          <button class="clear-filter-btn" onclick="clearFilters()">ล้างตัวกรอง</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Alerts List -->
+    <div class="alerts-container">
+      <div id="alertsList" class="alerts-list">
+        <!-- Alerts will be populated by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- หน้า Notifications -->
+  <div id="notificationsPage" class="page hidden">
+    <div class="camera-header">
+      <button class="back-btn" onclick="showHomePage()">← ย้อนกลับ</button>
+      <h2>Notifications</h2>
+      <div class="notification-badge" id="notificationBadge">3</div>
+    </div>
+    
+    <div class="notifications-container">
+      <div id="notificationsList" class="notifications-list">
+        <!-- Notifications will be populated by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- หน้า Profile -->
+  <div id="profilePage" class="page hidden">
+    <div class="camera-header">
+      <button class="back-btn" onclick="showHomePage()">← ย้อนกลับ</button>
+      <h2>Profile</h2>
+    </div>
+    
+    <div class="profile-container">
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <div class="avatar-placeholder">👤</div>
+        </div>
+        <h2 class="profile-name">Kamonrat</h2>
+      </div>
+      
+      <div class="profile-menu">
+        <button class="profile-menu-item" onclick="showMyInformation()">
+          <span class="menu-icon">👤</span>
+          <span class="menu-text">My Information</span>
+          <span class="menu-arrow">></span>
+        </button>
+        
+        <button class="profile-menu-item" onclick="showNotificationSettings()">
+          <span class="menu-icon">🔔</span>
+          <span class="menu-text">Notification settings</span>
+          <span class="menu-arrow">></span>
+        </button>
+      
+              <!-- System botton -->
+        <button class="profile-menu-item" onclick="showSystemConfigPage()">
+            <span class="menu-icon">⚙️</span>
+            <span class="menu-text">System Settings</span>
+            <span class="menu-arrow">></span>
+        </button>
+      </div>
+      <div class="profile-actions">
+        <button class="sign-out-btn" onclick="signOut()">
+          Sign out
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+<!-- หน้า System Config -->
+<div id="systemConfigPage" class="page hidden">
+  <div class="camera-header">
+    <button class="back-btn" onclick="goBackFromSystemConfig()">← ย้อนกลับ</button>
+    <h2>System Settings</h2>
+  </div>
+
+  <div class="system-config-container">
+    <form id="systemConfigForm">
+      <label for="alert_no_cat">Alert if no cat detected (hours):</label>
+      <input type="number" id="alert_no_cat" name="alert_no_cat" value="24" required>
+
+      <label for="alert_no_excrete">Alert if excretion is less than 3 times:</label>
+      <input type="number" id="alert_no_excrete" name="alert_no_excrete" value="3" required>
+
+      <label for="alert_no_sleep">Alert if sleep duration is not between 12-16 hours:</label>
+      <input type="number" id="alert_no_sleep" name="alert_no_sleep" value="16" required>
+
+      <label for="alert_no_eat">Alert if cat doesn't eat 2 meals/day:</label>
+      <input type="number" id="alert_no_eat" name="alert_no_eat" value="2" required>
+
+      <label for="max_supported_cats">Max supported cats:</label>
+      <input type="number" id="max_supported_cats" name="max_supported_cats" value="15" required>
+
+      <button type="submit" class="save-btn">Save Settings</button>
+    </form>
+  </div>
+</div>
+
+
+  <!-- หน้าข้อมูลแมว -->
+  <div id="catDetailPage" class="page hidden">
+    <div class="camera-header">
+      <button class="back-btn" onclick="goBackToCatGallery()">← ย้อนกลับ</button>
+      <h2 id="catDetailName">Cat Name</h2>
+    </div>
+    <div class="cat-detail-container">
+      <div class="cat-profile">
+        <img id="catDetailImage" src="" alt="Cat" class="cat-detail-image">
+        <h2 id="catProfileName">Name Red</h2>
+      </div>
+      <div class="cat-stats">
+        <div class="stat-item">
+          <span class="stat-icon">📍</span>
+          <span class="stat-label">Current Location</span>
+          <span class="stat-value" id="catLocation">Living Room</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-icon">🏃</span>
+          <span class="stat-label">Activity Status</span>
+          <span class="stat-value status-active">●</span>
+        </div>
+      </div>
+      
+      <div class="cat-actions">
+        <button class="statistics-btn" onclick="showCatStatisticsPage()">
+          📊 ดูสถิติ
+        </button>
+        <button class="statistics-btn" onclick="showAlertsPage()">
+          🚨 Alerts
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      searchStatistics();
+    });
+
+    async function searchStatistics() {
+      const catDropdown = document.getElementById('catSelect');
+      const selectedCatIndex = catDropdown.value;
+      const catName = catDropdown.options[selectedCatIndex]?.text || "Orange";
+
+      const period = document.getElementById('periodSelect').value;
+      const year = document.getElementById('yearSelect').value;
+      const month = document.getElementById('monthSelect').value;
+
+      let startDate = `${year}-01-01`;
+      let endDate = `${year}-12-31`;
+
+      if (period === 'monthly') {
+        startDate = `${year}-${month}-01`;
+        endDate = `${year}-${month}-31`;
+      } else if (period === 'daily') {
+        const today = new Date();
+        startDate = today.toISOString().slice(0, 10);
+        endDate = startDate;
+      }
+
+      const url = new URL("http://localhost:5000/api/cat_activities");
+      url.searchParams.append("cat_name", catName);
+      url.searchParams.append("start_date", startDate);
+      url.searchParams.append("end_date", endDate);
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        const activityDurations = { eat: 0, sleep: 0, excrete: 0 };
+        data.forEach(item => {
+          if (item.duration_minutes && activityDurations[item.activity_type] !== undefined) {
+            activityDurations[item.activity_type] += item.duration_minutes;
+          }
+        });
+
+        renderActivityChart(activityDurations);
+        document.getElementById("sleepTime").innerText = (activityDurations.sleep / 60).toFixed(1) + " ชั่วโมง";
+        document.getElementById("eatTime").innerText = activityDurations.eat + " นาที";
+        document.getElementById("totalMovement").innerText = (activityDurations.eat + activityDurations.excrete) + " นาที";
+      } catch (err) {
+        console.error("โหลดข้อมูลล้มเหลว:", err);
+      }
+    }
+
+    let chartInstance = null;
+    function renderActivityChart(data) {
+      const ctx = document.getElementById('statsChart').getContext('2d');
+      if (chartInstance) chartInstance.destroy();
+
+      chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['กิน', 'นอน', 'ขับถ่าย'],
+          datasets: [{
+            label: 'ระยะเวลา (นาที)',
+            data: [data.eat, data.sleep, data.excrete],
+            backgroundColor: ['#4caf50', '#2196f3', '#ff9800']
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+    }
+  </script>
+
+</body>
+
+</html>
